@@ -23,6 +23,7 @@
 #import <Endian.h>
 #endif
 #import <CommonCrypto/CommonCrypto.h>
+#import "SocketMSSPI.h"
 
 @interface PSWebSocketFrame : NSObject {
 @public
@@ -224,6 +225,7 @@ typedef NS_ENUM(NSInteger, PSWebSocketDriverState) {
     CFHTTPMessageSetHeaderFieldValue(msg, CFSTR("Sec-WebSocket-Version"), CFSTR("13"));
     CFHTTPMessageSetHeaderFieldValue(msg, CFSTR("Sec-WebSocket-Key"), (__bridge CFStringRef)_handshakeSecKey);
     CFHTTPMessageSetHeaderFieldValue(msg, CFSTR("Origin"), (__bridge CFStringRef)origin);
+    CFHTTPMessageSetHeaderFieldValue(msg, CFSTR("User-Agent"), (__bridge CFStringRef)[SocketMSSPI getUserAgent]);
     
     [_request.allHTTPHeaderFields enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         CFHTTPMessageSetHeaderFieldValue(msg, (__bridge CFStringRef)[NSString stringWithFormat:@"%@", key], (__bridge CFStringRef)[NSString stringWithFormat:@"%@", obj]);
